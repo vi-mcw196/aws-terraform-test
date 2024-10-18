@@ -1,5 +1,3 @@
-# app/setup.py
-
 from setuptools import setup, find_packages
 
 setup(
@@ -10,9 +8,4 @@ setup(
     install_requires=[
         'Flask',
     ],
-    entry_points={
-        'console_scripts': [
-            'my_flask_app=app.app:app.run',
-        ],
-    },
 )

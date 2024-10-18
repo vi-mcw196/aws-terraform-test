@@ -4,7 +4,9 @@
 
 # Variables
 GITHUB_TOKEN="${github_token}"
-REPO_URL="https://${GITHUB_TOKEN}@github.com/pwr-twwo/lab3-grupa11-3.git"
+GITHUB_OWNER="${github_owner}"
+GITHUB_REPO="${github_repo}"
+REPO_URL="https://${github_token}@github.com/${github_owner}/${github_repo}.git"
 APP_DIR="app"
 BUILD_DIR="build"
 RELEASE_NAME="v$(date +'%Y%m%d%H%M%S')"
@@ -12,6 +14,8 @@ RELEASE_NAME="v$(date +'%Y%m%d%H%M%S')"
 # Update and install dependencies
 apt-get update -y
 apt-get install -y git python3-pip
+pip3 install --upgrade importlib_metadata
+pip3 install testresources
 
 # Install GitHub CLI
 apt-get install -y curl
@@ -26,7 +30,7 @@ apt-get update -y
 apt-get install -y gh
 
 # Authenticate GitHub CLI
-echo "${GITHUB_TOKEN}" | gh auth login --with-token
+echo "${github_token}" | gh auth login --with-token
 
 # Clone the repository
 git clone $REPO_URL $BUILD_DIR
@@ -49,6 +53,7 @@ cd ../../..
 
 # Create a new release using GitHub CLI
 gh release create $RELEASE_NAME "$BUILD_DIR/$APP_DIR/dist/$PACKAGE_FILE" \
+  --repo "${github_owner}/${github_repo}" \
   --title "$RELEASE_NAME" --notes "Automated release $RELEASE_NAME"
 
 # Clean up

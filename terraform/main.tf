@@ -74,7 +74,9 @@ resource "aws_instance" "build_instance" {
   }
 
   user_data = templatefile("../scripts/build-user-data.sh.tpl", {
-    github_token = var.github_token
+    github_token = var.github_token,
+    github_owner = var.github_owner,
+    github_repo  = var.github_repo
   })
 }
 
@@ -93,6 +95,8 @@ resource "aws_instance" "test_instance" {
   depends_on = [aws_instance.build_instance]
 
   user_data = templatefile("../scripts/test-user-data.sh.tpl", {
-    github_token = var.github_token
+    github_token = var.github_token,
+    github_owner = var.github_owner,
+    github_repo  = var.github_repo
   })
 }
