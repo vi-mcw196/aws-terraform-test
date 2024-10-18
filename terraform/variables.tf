@@ -25,3 +25,15 @@ variable "github_token" {
   type        = string
   sensitive   = true
 }
+
+variable "github_owner" {
+  description = "GitHub repository owner (username or organization)"
+  type        = string
+  default     = "pwr-twwo"
+}
+
+variable "github_repo" {
+  description = "GitHub repository name"
+  type        = string
+  default     = "lab3-grupa11-3"
+}
