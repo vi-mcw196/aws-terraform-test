@@ -4,7 +4,9 @@
 
 # Variables
 GITHUB_TOKEN="${github_token}"
-REPO_URL="https://${GITHUB_TOKEN}@github.com/pwr-twwo/lab3-grupa11-3.git"
+GITHUB_OWNER="${github_owner}"
+GITHUB_REPO="${github_repo}"
+REPO_URL="https://${GITHUB_TOKEN}@github.com/${GITHUB_OWNER}/${GITHUB_REPO}.git"
 APP_DIR="app"
 BUILD_DIR="build"
 RELEASE_NAME="v$(date +'%Y%m%d%H%M%S')"
@@ -49,6 +51,7 @@ cd ../../..
 
 # Create a new release using GitHub CLI
 gh release create $RELEASE_NAME "$BUILD_DIR/$APP_DIR/dist/$PACKAGE_FILE" \
+  --repo "${GITHUB_OWNER}/${GITHUB_REPO}" \
   --title "$RELEASE_NAME" --notes "Automated release $RELEASE_NAME"
 
 # Clean up
