@@ -13,17 +13,19 @@ apt-get install -y git python3-pip
 pip3 install --upgrade importlib_metadata
 pip3 install testresources
 
-# Install GitHub CLI
-apt-get install -y curl
-curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg | \
-  dd of=/usr/share/keyrings/githubcli-archive-keyring.gpg
-chmod go+r /usr/share/keyrings/githubcli-archive-keyring.gpg
-echo "deb [arch=$(dpkg --print-architecture) \
-  signed-by=/usr/share/keyrings/githubcli-archive-keyring.gpg] \
-  https://cli.github.com/packages stable main" > \
-  /etc/apt/sources.list.d/github-cli.list
-apt-get update -y
-apt-get install -y gh
+# Install GitHub CLI (if not already installed)
+if ! command -v gh &> /dev/null; then
+  apt-get install -y curl
+  curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg | \
+    dd of=/usr/share/keyrings/githubcli-archive-keyring.gpg
+  chmod go+r /usr/share/keyrings/githubcli-archive-keyring.gpg
+  echo "deb [arch=$(dpkg --print-architecture) \
+    signed-by=/usr/share/keyrings/githubcli-archive-keyring.gpg] \
+    https://cli.github.com/packages stable main" > \
+    /etc/apt/sources.list.d/github-cli.list
+  apt-get update -y
+  apt-get install -y gh
+fi
 
 # Authenticate GitHub CLI
 echo "${github_token}" | gh auth login --with-token
