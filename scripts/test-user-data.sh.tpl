@@ -69,7 +69,7 @@ After=network.target
 
 [Service]
 User=ubuntu
-ExecStart=/usr/bin/python3 -m my_flask_app  # Run as a Python module
+ExecStart=/usr/local/bin/my_flask_app
 Restart=always
 
 [Install]
